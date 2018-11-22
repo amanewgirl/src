@@ -1,0 +1,123 @@
+<!DOCTYPE HTML>
+<html lang="eng-US" style="height:100%;">
+<head>
+<script src="" ajax.googleapis.com="" ajax="" libs="" jquery="" 1.9.1="" jquery.min.js""=""></script>
+<script type "text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+</head>
+<br>
+<br>
+<br>
+
+<p>Counting with a local variable.</p>
+
+<button type="button" onclick="myFunction()">Count!</button>
+
+<input type ="text" id="myMessage">
+<button id = "sendbutton">Send</button>
+
+<ul id="messages">
+
+</ul>
+<p id="demo"></p>
+
+<p id="demo2"></p>
+
+
+<script>
+var day;
+var counter = 0;
+var m="Today ";
+
+var add = (function () {
+    
+    return function () {return counter += 1;}
+
+
+})();
+
+function myFunction(){
+
+switch (add()) {
+    case 0:
+        day = "Sunday";
+        break;
+    case 1:
+        day = "Monday";
+        break;
+    case 2:
+        day = "Tuesday";
+        break;
+    case 3:
+        day = "Wednesday";
+        break;
+    case 4:
+        day = "Thursday";
+        break;
+    case 5:
+        day = "Friday";
+        break;
+    case  6:
+        day = "Saturday";
+}   
+	//socket.send(add());
+	console.log(day);
+	console.log(add());
+  // document.getElementById("demo2").innerHTML = "Today is " + day;
+	
+}
+
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	
+	//connects
+	var socket= io.connect('http://127.0.0.1:5000/');
+	
+	socket.on('connect', function(){
+	   socket.send('A new user has connected');
+	});
+       
+	var count =0;
+	//on click send message, send the contents of the text box to the server
+	$('#sendbutton').on('click', function(){
+	
+	/*var bn;
+	  //count += 1;
+	console.log(count);*/
+
+
+
+
+	socket.send('');
+
+	/*
+	   //socket.send(day);
+	   //socket.send($('#myMessage').val());
+	   var n=add();
+           socket.send(n);
+           
+	 // $('#demo2').val('');
+
+	  // $('#myMessage').val('');
+	 console.log(add());
+	// document.getElementById("demo2").innerHTML = "Today is " + add();
+	
+	*/
+
+	});
+
+	//posts the message from the server
+	socket.on('message', function(number){
+	   $("#messages").append('<li>' +number+ '</li>');
+	   console.log('Message recieved');	
+	});
+
+	});
+
+
+
+</script>
+</body>
+</html>

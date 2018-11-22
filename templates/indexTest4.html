@@ -1,0 +1,177 @@
+<!DOCTYPE HTML>
+<html lang="eng-US" style="height:100%;">
+<title>
+			lvl2 Gameboard
+		</title>
+<script src="" ajax.googleapis.com="" ajax="" libs="" jquery="" 1.9.1="" jquery.min.js""=""></script>
+<script type "text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<!-- CSS -->
+<link href ="{{ url_for ('static', filename ='css/bootstrap.min.css') }}" rel =" stylesheet" />
+
+
+<script>
+		// load images from array and drag and drop of images in gameboard- prepped for internet upload
+			var _imgArray=["/static/1A.jpg","/static/1D.jpg","/static/16A.jpg","/static/mke.jpg","/static/mark.jpg", "/static/Ready.jpg","/static/player1.jpg","/static/player2.jpg"];
+			
+	var socket= io.connect('http://127.0.0.1:5000/');
+	var socket_m= io.connect('http://127.0.0.1:5000/messages');
+	/*socket.on('connect', function(){
+	   socket.send('A new user has connected');
+	});*/
+
+
+
+       
+	
+	function mv(){
+	  console.log("somthns happn");
+
+var k= document.getElementById("myMessage").value;
+console.log(k);
+socket.send(k);
+
+
+	
+
+
+
+}
+
+
+
+
+
+			function init(){
+           			
+			/**for (_imgArray.length)
+			for each i in array
+			add img tag**/
+			var text = "";
+			var i;
+			for(i = 1; i <=_imgArray.length; ) {
+					
+					text+= "<img draggable='true' ondragstart='drag(event)' id='drag"+i +"'width='88' height='31'></img>";
+					document.getElementById("loadArea").innerHTML= text;
+					i++;
+			}
+			
+			
+			//post length of img elements-test of elementsarray working
+			////console.log(text);
+			console.log(document.getElementsByTagName("img").length);
+			
+			
+			//get img elements. for each element x in img elements
+			//img elements[x]= _imgArray[i]
+			var _img=[];
+			var x;
+			var tag = document.getElementsByTagName("img");
+			_img= document.getElementsByTagName("img").length;
+			
+			for(x=0; x<_img;){
+				tag[x].src = _imgArray[x];
+				x++;
+			}
+				
+		}
+			
+			function allowDrop(ev) {
+				ev.preventDefault();
+				}
+
+			function drag(ev) {
+				ev.dataTransfer.setData("text", ev.target.id);
+				}
+
+			function drop(ev) {
+				ev.preventDefault();
+				var data = ev.dataTransfer.getData("text");
+				socket.send(data);
+				var k= ev.target.appendChild(document.getElementById(data));
+				console.log('this is data: '+data);
+				
+				
+
+				//console.log('this is: '+k);
+				//console.log(k.value);
+
+				
+
+socket.on('join', function stuff(msg){
+ev.preventDefault();	   
+ev.target.appendChild(document.getElementById(msg));
+	   console.log('Message dropped');
+	console.log('Its'+ msg);	
+	});
+
+				
+				
+
+
+
+}
+		
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>
+ 	body {
+ 		padding-top:90px;
+		background-color:#A6C0C5;
+ 	}
+	
+	
+ </style>
+ 
+</head>
+
+		<body onload="init();">
+			<div id="board" style="
+    border-bottom: solid 5px black;
+">
+<h1>Lots of movement is about to happen!</h1><h1>
+				</h1><h2>Drop image here</h2><h2>
+				
+					
+
+<div id="dropArea1" ondrop="drop(event)" ondragover="allowDrop(event)" style="height: 250px;width: 250px;border-style:solid;background-color:white;display: inline-block;position: static;"></div>
+				</h2></div>
+                
+                <div id="preview" style="
+    border-top: solid 5px grey;
+">
+				<h3>load image here</h3>
+				<div id="loadArea"    ondragover="allowDrop(event)" >
+				
+						<!--><img "draggable="true" ondragstart="drag(event)" id="drag1" width="88" height="31"></img></!-->
+						
+				
+				</div>
+
+
+
+
+
+<input type ="text" id="myMessage">
+<button>Send</button>
+
+<ul id="messages">
+
+</ul>
+
+
+</body>
+</html>
+ 

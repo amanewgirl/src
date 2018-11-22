@@ -1,0 +1,60 @@
+<html lang="eng-US" style="height:100%;"><head>
+<title>"The Break-Up App"</title>
+<script src="" ajax.googleapis.com="" ajax="" libs="" jquery="" 1.9.1="" jquery.min.js""=""></script>
+<script type "text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<!-- CSS -->
+<link href ="{{ url_for ('static', filename ='css/bootstrap.min.css') }}" rel =" stylesheet" />
+<style>
+ 	body {
+ 		padding-top:90px;
+		background-color:#A6C0C5;
+ 	}
+	
+	
+ </style>
+ 
+</head>
+
+<body>
+
+ <nav class="navbar navbar-inverse navbar-fixed-top">
+ <div class="container">
+ <div class="navbar-header">
+
+ <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+ <span class="sr-only">Toggle navigation </span>
+ <span class="icon-bar"></span>
+ <span class="icon-bar"></span>
+ <span class="icon-bar"></span>
+ </button>
+ <class="navbar-brand">The Break-Up App </>
+ </div>
+
+<div id="navbar"class="collapse navbar-collapse">
+<ul class="nav navbar-nav">
+<li class="active"><a href="/in">talk</a></li>
+<li><a href="/resources">resources</a></li>
+<li><a href="/look-it-up">look it up</a></li>
+ </ul>
+ </div>
+ </div>
+</div>
+ </div>
+ </nav>
+
+ <div class =" container">
+{% block navtext %} {% endblock %} 
+
+{% block content %} {% endblock %} 
+ </div>
+
+<script src =" https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script >
+<script src ={{ url_for ('static', filename ='js/bootstrap.min.js')
+}}" ></script >
+</body >
+</html >
+
+ 
+
+

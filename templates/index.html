@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html lang="eng-US" style="height:100%;">
+{% extends "design.html" %}
+
+{% block navtext %}<div class="top"> <h1>talk about it...</h1></div> {% endblock %}
+
+{% block content %}
+<br>
+<br>
+<br>
+
+<input type ="text" id="myMessage">
+<button id = "sendbutton">Send</button>
+
+<ul id="messages">
+
+</ul>
+
+
+<script type="text/javascript">
+$(document).ready(function(){
+	
+	var socket= io.connect('http://127.0.0.1:5000/');
+	
+	socket.on('connect', function(){
+	   socket.send('A new user has connected');
+	});
+       
+	socket.on('message', function(msg){
+	   $("#messages").append('<li>' +msg+ '</li>');
+	   console.log('Message recieved');	
+	});
+
+	$('#sendbutton').on('click', function(){
+	   socket.send($('#myMessage').val());
+	   $('#myMessage').val('');
+	});
+
+
+});
+</script>
+</body>
+</html>
+{% endblock %} 

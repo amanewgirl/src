@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<head>
+<script src="" ajax.googleapis.com="" ajax="" libs="" jquery="" 1.9.1="" jquery.min.js""=""></script>
+</head>
+
+<html lang="eng-US" style="height:100%;">
+
+<form id="signup"action = "http://localhost:5000/talk" method = "POST" >
+Name <input type = "text" name = "name" /> <br><br>
+It ended <input type = "text" name = "weeks" size="4"/> weeks ago <br><br>
+
+<input type = "submit" name ="action" value = "Save session"/>
+<input type = "submit" name ="action" value = "Dont save session"/>
+
+
+</form>
+
+
+<script>
+function process() {
+  var form = document.getElementById('signup');
+  var elements = form.elements;
+  var values = [];
+
+  for (var i = 0; i < elements.length; i++)
+    values.push(encodeURIComponent(elements[i].name) + '=' + encodeURIComponent(elements[i].value));
+
+  form.action += '?' + values.join('&');
+}
+</script>
+
+</html>

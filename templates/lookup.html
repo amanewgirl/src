@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+ <html lang="eng-US" style="height:100%;">
+
+{% extends "design.html" %}
+
+{% block navtext %}
+<div class="top">
+<h1>look it up</h1>
+So, you should probably try speaking to someone in your life now. But in case you're not "there" yet - you can look up some help online
+</div>
+{% endblock %} 
+
+{% block content %}
+
+<div id ="search">
+   
+<script>
+  (function() {
+    var cx = '015087312948312910228:xwdvaudrlss';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<gcse:search></gcse:search>
+</div>
+
+
+{% endblock %} 

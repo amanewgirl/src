@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+ <html lang="eng-US" style="height:100%;">
+
+{% extends "design.html" %}
+
+{% block navtext %} {% endblock %} 
+
+{% block content %}
+<style>
+h3{
+font-size: 20px;
+    text-align: justify;
+}
+</style>
+
+<div class="main">
+
+<form id="signup"action = "http://localhost:5000/in" method = "POST">
+<h2>Break-ups are hard</h2> <br>
+<h3>They can be even harder when people around you don't want to hear anymore about what you're going through,
+or you simply don't want to discuss this current negative state with anyone who'll remember</h3><br>
+
+<p >with the breakup app, you can speak to people who know exactly what you're going through, find out some (useful) information about 
+why you're feeling this violently awful and what you can do about it and search as much as you like about how to get through this without it showing up on your google 
+search history.<br>
+
+it will get better; but in the meantime -get through it.
+</p>
+
+
+Name <input type = "text" name = "name" /> <br><br>
+It ended <input type = "text" name = "weeks" size="4"/> weeks ago <br><br>
+
+<input type = "submit" name ="action" value = "log in"/>
+
+
+</form>
+
+
+
+
+{% endblock %} 

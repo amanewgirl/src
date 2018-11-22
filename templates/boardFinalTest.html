@@ -1,0 +1,206 @@
+<!DOCTYPE HTML>
+<html lang="eng-US" style="height:100%;">
+<title>
+			lvl2 Gameboard
+		</title>
+<script src="" ajax.googleapis.com="" ajax="" libs="" jquery="" 1.9.1="" jquery.min.js""=""></script>
+<script type "text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!-- CSS -->
+<link href ="{{ url_for ('static', filename ='css/bootstrap.min.css') }}" rel =" stylesheet" />
+
+
+<script>
+		
+
+		// load images from array and drag and drop of images in gameboard- prepped for internet upload
+		var _imgArray=["/static/1A/1.jpg","/static/Ready.jpg","/static/player1.jpg","/static/1A/3.jpg","/static/1A/2.jpg","/static/1A/4.jpg","/static/1D/1.jpg","/static/Ready.jpg","/static/1D/3.jpg","/static/1D/2.jpg","/static/player2.jpg","/static/1D/4.jpg"];
+		
+		
+			//var _imgArray2=["/static/1D/1.jpg","/static/Ready.jpg","/static/1D/3.jpg","/static/1D/2.jpg","/static/player2.jpg","/static/1D/4.jpg"];
+		
+		
+
+		//connects to server		
+		var socket= io.connect('http://127.0.0.1:5000/');
+	
+
+
+
+			function init(){
+           			
+			/**for (_imgArray.length)
+			for each i in array
+			add img tag**/
+			var text = "";
+
+			var i;
+			var n;
+//sets up the dimensions of the cards in load area
+
+			for(i = 1; i <=10; ) {
+					
+					text+= "<img draggable='true' ondragstart='drag(event)' id='drag"+i +"'width='200' height='300'></img>";
+					document.getElementById("loadArea").innerHTML= text;
+					i++;
+			}
+			
+
+			//post length of img elements-test of elementsarray working
+			////console.log(text);
+			console.log(document.getElementsByTagName("img").length);
+			
+			
+			//get img elements. for each element x in img elements
+			//img elements[x]= _imgArray[i]
+			
+//actually adds the img srcs from the array to all the img tags
+
+{% if player %}
+			var _img=[];
+			var x;
+			var tag = document.getElementsByTagName("img");
+			_img= document.getElementsByTagName("img").length;
+			
+			for(x=0; x<_img;){
+				tag[x].src = _imgArray[x];
+				x++;
+			}
+{% else %}
+	var _img=[];
+			var x;
+			var tag = document.getElementsByTagName("img");
+			_img= document.getElementsByTagName("img").length;
+			
+			for(x=6; x<=12;){
+				tag[x].src = _imgArray[x];
+				x++;
+			}
+
+{% endif %}
+				
+		}
+			
+			function allowDrop(ev) {
+				ev.preventDefault();
+				}
+
+			function drag(ev) {
+				ev.dataTransfer.setData("text", ev.target.id);
+				}
+
+				
+			var _check=[];
+			var _play1=["drag2","drag3","drag1","drag5","drag4","drag6"];
+			var pts=0;
+			var sum;
+			
+			function drop(ev) {
+				demoP = document.getElementById("points");
+				ev.preventDefault();
+				var data = ev.dataTransfer.getData("text");
+				socket.send(data);
+				var k= ev.target.appendChild(document.getElementById(data));
+				console.log('this is data: '+data);
+				_check.push(data);
+					//console.log('this is: '+k);
+					console.log(_check);
+					console.log(_play1);
+				
+				for ( var i = 0; i < _check.length; i++) {
+  
+  				sum = _play1[i].includes(_check[i]);
+   
+   					
+					}
+				if (sum == true){
+    					pts+=1;
+					
+    						
+					}
+
+
+   					if(_check.length==6){
+						console.log("yay"+pts);
+						demoP.innerHTML = pts;
+
+						$("#myModal").modal();
+
+						}
+
+			//sends message to server once dropped onto game board			
+			socket.on('message', function stuff(msg){
+				ev.preventDefault();	   
+				ev.target.appendChild(document.getElementById(msg));
+	   			console.log('Message dropped');
+				console.log('Its'+ msg);	
+				});
+		}
+		
+</script>
+</head>
+
+	<body onload="init();">
+		<div id="board" style="border-bottom: solid 5px black;">
+			<h2>Drag your cards into the area below!</h2>
+				<div id="dropArea1" ondrop="drop(event)" ondragover="allowDrop(event)" style="height: 400px;width: 100%;border-style:solid;background-color:white;display: inline-block;position: static;"></div>
+				
+                
+                <div id="preview" style="border-top: solid 5px grey;">
+			{% if player %}
+  				<h3><i>Your are: </i> Player 1  <br>         <i>Arguing:</i>  Cimate change does not Exist  <br>    <i>Using Argument Scheme:</i> Argument from Sign</h3>
+					<div id="loadArea"    ondragover="allowDrop(event)" >
+
+			{% else %}
+  				<h3><i>Your are: </i> Player 2  <br>         <i>Arguing:</i>  Cimate change does Exist  <br>    <i>Using Argument Scheme:</i> Argument from Sign</h3>
+					<div id="loadArea"    ondragover="allowDrop(event)" >
+
+			{% endif %}
+
+
+
+
+			
+						<!--> Cards are loaded into here</!-->
+			</div>
+
+
+
+		<div class="container">
+
+   <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header" style="padding:35px 50px;">
+         
+          <h3>Round Completed:  Argument From Expert Opinion</h3>
+        </div>
+        
+        <div class="modal-body" style="padding:40px 50px;">
+        <p id ="points">Thanks for playing! to keep learning new argument schemes in Shuffle, click <b>play Shuffle</b>. To apply your new argument skills 					against another player, click <b>play Debate</b>.</p><br>
+        
+           <button type="submit" class="btn btn-success pull-left"  onclick="window.location.href='/shuffle3'"> Play Shuffle</button>
+             <button type="submit" class="btn btn-success pull-right" data-dismiss="modal">Play Debate</button>
+        </div>
+        
+        <div class="modal-footer">
+        
+          <p>Are you done for now? <a href="https://amanewgirl.github.io/web/">Leave game</a></p>
+          
+        </div>
+      </div>
+      
+    </div>
+  </div> 
+</div>
+
+
+</body>
+</html>
+ 
