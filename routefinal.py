@@ -33,11 +33,16 @@ def design():
 def index():
 	return render_template('debateInstructions.html')
 
+#@app.route('/debate')
+#def debate():
+#	return render_template ('boardFinal.html') 
+
+
 #debate game
 @app.route('/debate')
 @app.route('/debate/<player>')
 def debate(player=None):
-	return render_template ('boardFinalTest1.html', player=player)
+	return render_template ('boardFinalTest.html', player=player)
 
 
 
